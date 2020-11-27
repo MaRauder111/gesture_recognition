@@ -20,16 +20,16 @@ def show_predict(predict, frame, pos, clf_name):
         shift_y = 38
         cv2.rectangle(frame, (shift_x, shift_y - 15), (75, shift_y - 30),
                       (255, 255, 255), thickness=-1)
-    elif pos == 1:
-        shift_x = frame.shape[1] - 80
-        shift_y = 38
-        cv2.rectangle(frame, (shift_x - 5, shift_y - 15), (frame.shape[1] - 3, shift_y - 30),
-                      (255, 255, 255), thickness=-1)
-    else:
-        shift_x = frame.shape[1] - 80
-        shift_y = 235
-        cv2.rectangle(frame, (shift_x - 5, shift_y - 15), (frame.shape[1] - 3, shift_y - 30),
-                      (255, 255, 255), thickness=-1)
+    # elif pos == 1:
+    #     shift_x = frame.shape[1] - 80
+    #     shift_y = 38
+    #     cv2.rectangle(frame, (shift_x - 5, shift_y - 15), (frame.shape[1] - 3, shift_y - 30),
+    #                   (255, 255, 255), thickness=-1)
+    # else:
+    #     shift_x = frame.shape[1] - 80
+    #     shift_y = 235
+    #     cv2.rectangle(frame, (shift_x - 5, shift_y - 15), (frame.shape[1] - 3, shift_y - 30),
+    #                   (255, 255, 255), thickness=-1)
 
     cv2.putText(frame, clf_name, (shift_x, shift_y - 18),
                 cv2.FONT_HERSHEY_COMPLEX, 0.47, (0, 0, 0), 2)
@@ -57,8 +57,8 @@ def draw_crop_bb(frame, x, y):
     cv2.rectangle(frame, (max_x + diag_incr, min_y - diag_incr),
                   (min_x - diag_incr, max_y + diag_incr), (0, 32, 222), 2)
     # Show crop hand in another window
-    cv2.imshow('Palm', cv2.resize(crop, (224, 224), interpolation=cv2.INTER_LINEAR))
-    cv2.moveWindow('Palm', 20, 20)
+    #cv2.imshow('Palm', cv2.resize(crop, (224, 224), interpolation=cv2.INTER_LINEAR))
+    #cv2.moveWindow('Palm', 20, 20)
     return crop
 
 
@@ -72,7 +72,7 @@ def draw_progress_bar(frame, frame_count, word):
 WINDOW = "Gesture recognition"
 CNN_CLASSIFIER_PATH = "models/model_mobile9.h5"
 KEY_POINTS_CLASSIFIER_PATH = 'models/lr_model.sav'
-DEVICE_ID = 1
+DEVICE_ID = 0
 ALPH = ['А', 'Б', 'В', 'Г', 'И', 'К', 'Н', 'О', 'С']
 
 cap = cv2.VideoCapture(DEVICE_ID)
@@ -124,8 +124,8 @@ while cap.isOpened():
         predictions.append(np.argmax(mean_pred))
 
         show_predict(pred_pts, image, 0, '  Points')
-        show_predict(pred_cnn, image, 1, '  CNN')
-        show_predict(mean_pred, image, 2, '  Predict')
+        # show_predict(pred_cnn, image, 1, '  CNN')
+        # show_predict(mean_pred, image, 2, '  Predict')
 
     draw_progress_bar(image, frame_count, word)
     cv2.imshow(WINDOW, image)
